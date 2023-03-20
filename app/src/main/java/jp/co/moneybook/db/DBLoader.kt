@@ -106,4 +106,38 @@ class DBLoader(val context: Context) {
         db.close()
         return pay
     }
+
+    @SuppressLint("Range")
+    fun historyList(sDate: Long, eDate: Long) : ArrayList<Any>{
+        val array = ArrayList<Any>()
+        val sql = "select * from " + Constant.TABLE_NAME + " where " + Constant.COL_DATE + " <= " + sDate +
+         " and " + Constant.COL_DATE + ">=" + eDate + " order by " + Constant.COL_DATE + " desc"
+        val cursor = db.readableDatabase.rawQuery(sql, null)
+
+        var itemDate : Long = 0
+        while (cursor.moveToNext()){
+            val id = cursor.getInt(cursor.getColumnIndex(Constant.COL_ID))
+            val type = cursor.getInt(cursor.getColumnIndex(Constant.COL_TYPE))
+            val type2 = cursor.getString(cursor.getColumnIndex(Constant.COL_TYPE2))
+            val content = cursor.getString(cursor.getColumnIndex(Constant.COL_CONTENT))
+            val pay = cursor.getInt(cursor.getColumnIndex(Constant.COL_PAY))
+            val datetime = cursor.getLong(cursor.getColumnIndex(Constant.COL_DATE))
+
+            if(itemDate != datetime){
+                itemDate = datetime
+                if(itemDate == 0.toLong()) return array
+                array.add(itemDate)
+                val item = Item(id, type, type2, content, pay, datetime)
+                array.add(item)
+            } else {
+                val item = Item(id, type, type2, content, pay, datetime)
+                array.add(item)
+            }
+
+
+        }
+        cursor.close()
+        db.close()
+        return array
+    }
 }

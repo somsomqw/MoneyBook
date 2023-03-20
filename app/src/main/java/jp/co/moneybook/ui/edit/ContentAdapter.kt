@@ -41,10 +41,8 @@ class ContentAdapter(private val context: Context, val onChangeData: OnChangeDat
             1-> {view.textPay.setTextColor(context.resources.getColor(android.R.color.holo_red_dark, null)) }
         }
 
-        Log.d("aaaaaa", "1111")
         holder.itemView.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
-                Log.d("aaaaaa", "22")
                 dialog(item, position)
             }
         })
