@@ -95,10 +95,17 @@ class DBLoader(val context: Context) {
         return array
     }
 
-    fun getMaxPay(datetime: Long, type: Int) : Int {
+    fun getMaxPay(sDate: Long, eDate: Long, type: Int) : Int {
+        // type -1 = total max
         var pay = 0
         val sql = "select sum(" + Constant.COL_PAY + " ) from " + Constant.TABLE_NAME + " where " +
-                Constant.COL_DATE + " = " + datetime + " and " + Constant.COL_TYPE + " = " + type
+                Constant.COL_DATE + " <= " + sDate +
+                " and " + Constant.COL_DATE + ">=" + eDate + " and " + Constant.COL_TYPE + " = " + type
+        if(type == -1) {
+            val sql = "select sum(" + Constant.COL_PAY + " ) from " + Constant.TABLE_NAME + " where " +
+                    Constant.COL_DATE + " <= " + sDate +
+                    " and " + Constant.COL_DATE + ">=" + eDate
+        }
         val cursor = db.readableDatabase.rawQuery(sql, null)
         if (cursor.moveToFirst()) {
             pay = cursor.getInt(0)
