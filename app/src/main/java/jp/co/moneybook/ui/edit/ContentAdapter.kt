@@ -61,8 +61,8 @@ class ContentAdapter(private val context: Context, val onChangeData: OnChangeDat
         var expenditureMax = 0
         if(array.size>0){
             val item = array.get(0)
-            revenueMax = DBLoader(context).getMaxPay(item.datetime, 0)
-            expenditureMax = DBLoader(context).getMaxPay(item.datetime, 1)
+            revenueMax = DBLoader(context).getMaxPay(item.datetime, item.datetime, 0)
+            expenditureMax = DBLoader(context).getMaxPay(item.datetime, item.datetime, 1)
         }
         onChangeData.onChange(revenueMax, expenditureMax)
 
@@ -126,8 +126,8 @@ class ContentAdapter(private val context: Context, val onChangeData: OnChangeDat
                     var revenueMax = 0
                     var expenditureMax = 0
                     if(array.size>0){
-                        revenueMax = DBLoader(context).getMaxPay(item.datetime, 0)
-                        expenditureMax = DBLoader(context).getMaxPay(item.datetime, 1)
+                        revenueMax = DBLoader(context).getMaxPay(item.datetime, item.datetime, 0)
+                        expenditureMax = DBLoader(context).getMaxPay(item.datetime, item.datetime, 1)
                     }
                     onChangeData.onChange(revenueMax, expenditureMax)
 
@@ -146,7 +146,6 @@ class ContentAdapter(private val context: Context, val onChangeData: OnChangeDat
         val builder = AlertDialog.Builder(context)
         builder.setTitle(item.content)
         val list : Array<String> = arrayOf("수정", "삭제")
-        Log.d("aaaaaa", "33333")
         builder.setItems(list, object : DialogInterface.OnClickListener{
             override fun onClick(p0: DialogInterface?, p1: Int) {
                 when(p1){
@@ -161,8 +160,8 @@ class ContentAdapter(private val context: Context, val onChangeData: OnChangeDat
                         var revenueMax = 0
                         var expenditureMax = 0
                         if(array.size>0){
-                            revenueMax = DBLoader(context).getMaxPay(item.datetime, 0)
-                            expenditureMax = DBLoader(context).getMaxPay(item.datetime, 1)
+                            revenueMax = DBLoader(context).getMaxPay(item.datetime, item.datetime, 0)
+                            expenditureMax = DBLoader(context).getMaxPay(item.datetime, item.datetime, 1)
                         }
                         onChangeData.onChange(revenueMax, expenditureMax)
                     }
